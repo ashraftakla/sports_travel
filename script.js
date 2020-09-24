@@ -13,7 +13,6 @@ $.ajax({
   method: "GET"
 }).then(function (response) {
   console.log(response);
-<<<<<<< HEAD
 
   for ( var x = 0; x < response._embedded.events.length; x++){
     // Local Event Variables
@@ -55,10 +54,6 @@ $.ajax({
 
     $("#event-hotel-info").append(eventCard);
   }
-=======
-  // console.log(response._embedded.events[0])
-
->>>>>>> edd1d6919afa51dd16849a480d7eba0884f93b2a
 });
 
 var query = "new york"
