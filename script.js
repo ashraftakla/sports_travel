@@ -58,3 +58,25 @@ $.ajax({
   }
 
 });
+
+
+function getHotelData(eventLat, eventLon) {
+  var query = "new york"
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "https://hotels4.p.rapidapi.com/locations/search?locale=en_US&query=" + query,
+    "method": "GET",
+    "headers": {
+      "x-rapidapi-host": "hotels4.p.rapidapi.com",
+      "x-rapidapi-key": "111d87e276msh7a7e68922114d72p183e89jsnda0c04325211"
+    }
+  }
+
+  $.ajax(settings).done(function (response) {
+    console.log(response);
+    console.log(response.suggestions[3].entities[0].name);
+  });
+}
+
+
