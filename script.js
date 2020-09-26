@@ -39,7 +39,7 @@ $("#search-button").click(function () {
       var eventURL = event.url;
       var eventLat = event._embedded.venues[0].location.latitude;
       var eventLon = event._embedded.venues[0].location.longitude;
-
+      var x = x;
       // Setting date to show month/day/year
       eventDate = JSON.stringify(eventDate);
       eventDate.split();
