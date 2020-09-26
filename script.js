@@ -5,7 +5,40 @@ var eventInput = "baseball";
 var startDate = "";
 var endDate = "";
 var startEndDateTime = "2020-09-27" + "T00:00:00Z";
+// function for start and end date
+$(function () {
+  $(".datepicker").datepicker();
+});
+// Ticketmaster Ajax call
+$.ajax({
+  url: "https://app.ticketmaster.com/discovery/v2/events.json",
+  data: {
+    "apikey": "xJY9ixix03PyEzTVRHSf0eldysSBFkoN",
+    "stateCode": stateInput,
+    "classificationName": eventInput,
+    "startEndDateTime": startEndDateTime,
+  },
+  method: "GET"
+}).then(function (response) {
+  console.log(response);
+  for (var x = 0; x < response._embedded.events.length; x++) {
+    // Local Event Variables
+    var event = response._embedded.events[x];
+    var eventName = event.name;
+    var eventDate = event.dates.start.localDate;
+    var eventTime = event.dates.start.localTime;
+    var eventVenue = event._embedded.venues[0].name;
+    var eventAddress = event._embedded.venues[0].address.line1;
+    var eventCity = event._embedded.venues[0].city.name + ", " + event._embedded.venues[0].state.stateCode + " " + event._embedded.venues[0].postalCode;
+    var priceRangeMin = event.priceRanges[0].min;
+    var priceRangeMax = event.priceRanges[0].max;
+    var eventLat = event._embedded.venues[0].location.latitude;
+    var eventLon = event._embedded.venues[0].location.longitude;
 
+    // If time is not determined yet eventTime will show TBD
+    if (eventTime === undefined) {
+      eventTime = "TBD";
+    }
 
 $("#search-button").click(function () {
 
