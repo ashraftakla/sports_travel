@@ -3,7 +3,10 @@ var city = "";
 var stateInput = "ca";
 var eventInput = "baseball";
 var startEndDateTime = "2020-09-27" + "T00:00:00Z";
-
+// function for start and end date
+$(function () {
+  $(".datepicker").datepicker();
+});
 // Ticketmaster Ajax call
 $.ajax({
   url: "https://app.ticketmaster.com/discovery/v2/events.json",
@@ -16,7 +19,7 @@ $.ajax({
   method: "GET"
 }).then(function (response) {
   console.log(response);
-  for ( var x = 0; x < response._embedded.events.length; x++){
+  for (var x = 0; x < response._embedded.events.length; x++) {
     // Local Event Variables
     var event = response._embedded.events[x];
     var eventName = event.name;
@@ -29,9 +32,9 @@ $.ajax({
     var priceRangeMax = event.priceRanges[0].max;
     var eventLat = event._embedded.venues[0].location.latitude;
     var eventLon = event._embedded.venues[0].location.longitude;
-    
+
     // If time is not determined yet eventTime will show TBD
-    if (eventTime === undefined){
+    if (eventTime === undefined) {
       eventTime = "TBD";
     }
 
