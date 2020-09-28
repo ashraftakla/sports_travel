@@ -1,7 +1,7 @@
 // Global Variables
 var city = $("#user-city").text() || "";
 var stateInput = "";
-var eventInput = "baseball";
+var eventInput = "";
 var startDate = "";
 var endDate = "";
 var startEndDateTime = "2020-09-27" + "T00:00:00Z";
@@ -71,15 +71,16 @@ function getTicketData() {
 
         // If time is not determined yet eventTime will show TBD
         if (eventTime === undefined) {
-          eventTime = "TBD";
+          var finalTime = "TBD";
         } else {
           eventTime = eventTime.split(":");
           var hours = eventTime[0];
           var minutes = eventTime[1];
           var AmOrPm = hours >= 12 ? 'pm' : 'am';
           hours = (hours % 12) || 12;
-          var finalTime = hours + ":" + minutes + AmOrPm;
+          finalTime = hours + ":" + minutes + AmOrPm;
         }
+
         // If price range is undefined it will show prices unavailable
         if (event.priceRanges != undefined) {
           var priceRangeMin = event.priceRanges[0].min;
@@ -88,15 +89,6 @@ function getTicketData() {
         } else {
           priceRange = "Prices Unavailable";
         }
-
-        // // Console Logs
-        // console.log("Event Name: " + event.name);
-        // console.log("Event DateTime: " + eventDateFinal + " " + finalTime);
-        // console.log("Event Venue: " + eventVenue);
-        // console.log("Event Address: " + eventAddress);
-        // console.log("Event Address Line2: " + eventAddress2);
-        // console.log("Event Price Range: " + priceRange);
-        // console.log("Event Lat/Lon: " + eventLat + "/" + eventLon);
 
         // HTML setup
         var eventCard = $("<div class='card mt-4 has-text-centered' id='event-card'>");
@@ -113,10 +105,11 @@ function getTicketData() {
         $("#event-hotel-info").append(eventCard);
 
       }
-
+      // Call get hotel data function
       getHotelData(eventLat, eventLon, eventDate);
     } else {
-      $("#event-hotel-info").addClass("level-item has-text-centered").text("No Events Available, Please Search Again");
+      // If no events the page will display that there are no events available
+      $("#event-hotel-info").addClass("has-text-centered").text("No Events Available, Please Search Again");
     }
   });
 
