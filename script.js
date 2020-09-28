@@ -1,7 +1,7 @@
 // Global Variables
 var city = $("#user-city").text() || "";
 var stateInput = "";
-var eventInput = "baseball";
+var eventInput = "";
 var startDate = "";
 var endDate = "";
 var startEndDateTime = "2020-09-27" + "T00:00:00Z";
@@ -45,6 +45,7 @@ function getTicketData() {
       "apikey": "xJY9ixix03PyEzTVRHSf0eldysSBFkoN",
       "stateCode": stateInput,
       "city": city,
+      "keyword": sports,
       "classificationName": eventInput,
       "startEndDateTime": startEndDateTime,
     },
@@ -111,7 +112,7 @@ function getTicketData() {
         eventInfoDiv.append(eventAddressDiv, ticketInfoP);
         eventCard.append(eventHeader, eventInfoDiv);
         $("#event-hotel-info").append(eventCard);
-
+        
       }
 
       getHotelData(eventLat, eventLon, eventDate);
