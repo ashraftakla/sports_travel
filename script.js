@@ -7,6 +7,27 @@ var endDate = "";
 var startEndDateTime = "2020-09-27" + "T00:00:00Z";
 
 $("#search-button").click(function () {
+  // Hotel Function
+  function getHotelData(eventLat, eventLon, date) {
+    var settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": "https://tripadvisor1.p.rapidapi.com/hotels/list-by-latlng?lang=en_US&hotel_class=1%252C2%252C3&limit=10&adults=1&rooms=1&child_rm_ages=7%252C10&currency=USD&zff=4%252C6&subcategory=hotel%252Cbb%252Cspecialty&nights=2&latitude=12.91285&longitude=100.87808",
+      "data": {
+        "checkin": date,
+        "latitude": eventLat,
+        "longitude": eventLon,
+      },
+      "method": "GET",
+      "headers": {
+        "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
+        "x-rapidapi-key": "660e4c976emsh79b686d93d6b038p1d5f41jsnffb01ced2e18"
+      }
+    }
+    $.ajax(settings).done(function (response) {
+      console.log(response);
+    });
+  }
 
   // Ticketmaster Ajax call
   $.ajax({
@@ -74,7 +95,7 @@ $("#search-button").click(function () {
       $("#event-hotel-info").append(eventCard);
       eventClick(eventURL);
     }
-    // getHotelData(eventLat, eventLon, eventDate);
+    getHotelData(eventLat, eventLon, eventDate);
   });
 })
 
@@ -84,6 +105,3 @@ function eventClick(eventURL) {
     window.open(eventURL);
   });
 }
-
-
-
