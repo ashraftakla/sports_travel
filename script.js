@@ -1,10 +1,10 @@
 // Global Variables
-var city = $("#user-city").text() || "";
+var city = "";
 var stateInput = "";
 var eventInput = "";
-var startDate = "";
-var endDate = "";
-var startEndDateTime = "2020-09-27" + "T00:00:00Z";
+var startDate = $("#start-date").val() || "";
+var endDate = $("#end-date").val() || "";
+// var startDateTime = 2020-09-30T00:00:00Z;
 
 // Function to pull the correct info from the search bar
 $("#user-state").change(function () {
@@ -46,16 +46,27 @@ function getHotelData(eventLat, eventLon, eventDate) {
 };
 
 function getTicketData() {
+  city = $("#user-city").val();
+  console.log(city);
+  console.log(stateInput);
+  console.log(eventInput);
+  // console.log(startDateTime);
+
+  if (eventInput === "Choose Sport") {
+    eventInput = "";
+  }
+  console.log(eventInput);
   // Ticketmaster Ajax call
   $.ajax({
     url: "https://app.ticketmaster.com/discovery/v2/events.json",
     data: {
       "apikey": "xJY9ixix03PyEzTVRHSf0eldysSBFkoN",
-      "stateCode": stateInput,
-      "city": city,
+      "radius": "500",
       "keyword": "sports",
+      "city": city,
+      "stateCode": stateInput,
       "classificationName": eventInput,
-      "startEndDateTime": startEndDateTime,
+      "localStartDateTime": "2020-09-30T00:00:00",
     },
     method: "GET"
   }).then(function (response) {
@@ -112,29 +123,27 @@ function getTicketData() {
         eventInfoDiv.append(eventAddressDiv, ticketInfoP);
         eventCard.append(eventHeader, eventInfoDiv);
         $("#event-info").append(eventCard);
-        
+
       }
       // Call get hotel data function
       getHotelData(eventLat, eventLon, eventDate);
+
     } else {
       // If no events the page will display that there are no events available
       $("#event-info").addClass("has-text-centered").text("No Events Available, Please Search Again");
     }
+    // Click event for the tickets for the event
+    $("#event-card").click(function () {
+      window.open(eventURL);
+    });
   });
 
 }
 
 // Search button function
 $("#search-button").click(function () {
-  
-  console.log(stateInput);
-  console.log(eventInput);
-
+  console.log(city);
   $("#event-info").empty();
-  getTicketData();
+  getTicketData(city);
 })
 
-// Click event for the tickets for the event
-$("#event-card").click(function () {
-  window.open(eventURL);
-});
