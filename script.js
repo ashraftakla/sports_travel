@@ -45,6 +45,7 @@ function getTicketData() {
       "apikey": "xJY9ixix03PyEzTVRHSf0eldysSBFkoN",
       "stateCode": stateInput,
       "city": city,
+      "keyword": sports,
       "classificationName": eventInput,
       "startEndDateTime": startEndDateTime,
     },
@@ -103,7 +104,7 @@ function getTicketData() {
         eventInfoDiv.append(eventAddressDiv, ticketInfoP);
         eventCard.append(eventHeader, eventInfoDiv);
         $("#event-hotel-info").append(eventCard);
-
+        
       }
       // Call get hotel data function
       getHotelData(eventLat, eventLon, eventDate);
