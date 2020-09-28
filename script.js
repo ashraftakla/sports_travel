@@ -1,7 +1,7 @@
 // Global Variables
 var city = $("#user-city").text() || "";
 var stateInput = "";
-var eventInput = "";
+var eventInput = "baseball";
 var startDate = "";
 var endDate = "";
 var startEndDateTime = "2020-09-27" + "T00:00:00Z";
@@ -15,7 +15,27 @@ $("select").change(function () {
   stateInput = str;
 }).trigger("change");
 
-
+// Hotel Function
+function getHotelData(eventLat, eventLon, eventDate) {
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "https://tripadvisor1.p.rapidapi.com/hotels/list-by-latlng?lang=en_US&hotel_class=1%252C2%252C3&limit=5&adults=1&rooms=1&child_rm_ages=7%252C10&currency=USD&zff=4%252C6&subcategory=hotel%252Cbb%252Cspecialty&nights=2",
+    "data": {
+      "checkin": eventDate,
+      "latitude": eventLat,
+      "longitude": eventLon,
+    },
+    "method": "GET",
+    "headers": {
+      "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
+      "x-rapidapi-key": "660e4c976emsh79b686d93d6b038p1d5f41jsnffb01ced2e18"
+    }
+  }
+  $.ajax(settings).done(function (response) {
+    console.log(response);
+  });
+};
 
 function getTicketData() {
   // Ticketmaster Ajax call
@@ -34,7 +54,6 @@ function getTicketData() {
     if (response._embedded != undefined) {
       // Local Event Variables
       for (var x = 0; x < response._embedded.events.length; x++) {
-
         var event = response._embedded.events[x];
         var eventName = event.name;
         var eventDate = event.dates.start.localDate;
@@ -61,7 +80,7 @@ function getTicketData() {
           hours = (hours % 12) || 12;
           var finalTime = hours + ":" + minutes + AmOrPm;
         }
-
+        // If price range is undefined it will show prices unavailable
         if (event.priceRanges != undefined) {
           var priceRangeMin = event.priceRanges[0].min;
           var priceRangeMax = event.priceRanges[0].max;
@@ -71,13 +90,13 @@ function getTicketData() {
         }
 
         // // Console Logs
-        console.log("Event Name: " + event.name);
-        console.log("Event DateTime: " + eventDateFinal + " " + finalTime);
-        console.log("Event Venue: " + eventVenue);
-        console.log("Event Address: " + eventAddress);
-        console.log("Event Address Line2: " + eventAddress2);
-        console.log("Event Price Range: " + priceRange);
-        console.log("Event Lat/Lon: " + eventLat + "/" + eventLon);
+        // console.log("Event Name: " + event.name);
+        // console.log("Event DateTime: " + eventDateFinal + " " + finalTime);
+        // console.log("Event Venue: " + eventVenue);
+        // console.log("Event Address: " + eventAddress);
+        // console.log("Event Address Line2: " + eventAddress2);
+        // console.log("Event Price Range: " + priceRange);
+        // console.log("Event Lat/Lon: " + eventLat + "/" + eventLon);
 
         // HTML setup
         var eventCard = $("<div class='card mt-4 has-text-centered' id='event-card'>");
@@ -91,13 +110,13 @@ function getTicketData() {
 
         eventInfoDiv.append(eventAddressDiv, ticketInfoP);
         eventCard.append(eventHeader, eventInfoDiv);
-
         $("#event-hotel-info").append(eventCard);
 
       }
-      // getHotelData(eventLat, eventLon, eventDate);
+
+      getHotelData(eventLat, eventLon, eventDate);
     } else {
-      $("#event-hotel-info").addClass("level-item has-text-centered").text("No Events Available, Please Search Again")
+      $("#event-hotel-info").addClass("level-item has-text-centered").text("No Events Available, Please Search Again");
     }
   });
 
@@ -106,7 +125,6 @@ function getTicketData() {
 
 // Search button function
 $("#search-button").click(function () {
-  console.log(stateInput);
   $("#event-hotel-info").empty();
   getTicketData();
 })
@@ -115,8 +133,3 @@ $("#search-button").click(function () {
 $("#event-card").click(function () {
   window.open(eventURL);
 });
-
-
-
-
-
