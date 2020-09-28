@@ -10,7 +10,7 @@ var startEndDateTime = "2020-09-27" + "T00:00:00Z";
 $("#user-state").change(function () {
   var state = "";
   $("#user-state option:selected").each(function () {
-    state += $(this).text() + " ";
+    state += $(this).text();
   });
   stateInput = state;
 }).trigger("change");
@@ -18,7 +18,7 @@ $("#user-state").change(function () {
 $("#user-sport").change(function () {
   var sport = "";
   $("#user-sport option:selected").each(function () {
-    sport += $(this).val() + " ";
+    sport += $(this).val();
   });
   eventInput = sport;
 }).trigger("change");
@@ -111,23 +111,26 @@ function getTicketData() {
 
         eventInfoDiv.append(eventAddressDiv, ticketInfoP);
         eventCard.append(eventHeader, eventInfoDiv);
-        $("#event-hotel-info").append(eventCard);
+        $("#event-info").append(eventCard);
         
       }
       // Call get hotel data function
       getHotelData(eventLat, eventLon, eventDate);
     } else {
       // If no events the page will display that there are no events available
-      $("#event-hotel-info").addClass("has-text-centered").text("No Events Available, Please Search Again");
+      $("#event-info").addClass("has-text-centered").text("No Events Available, Please Search Again");
     }
   });
-
 
 }
 
 // Search button function
 $("#search-button").click(function () {
-  $("#event-hotel-info").empty();
+  
+  console.log(stateInput);
+  console.log(eventInput);
+
+  $("#event-info").empty();
   getTicketData();
 })
 
