@@ -6,13 +6,21 @@ var startDate = "";
 var endDate = "";
 var startEndDateTime = "2020-09-27" + "T00:00:00Z";
 
-// Function to pull the correct state info from the search bar
-$("select").change(function () {
-  var str = "";
-  $("select option:selected").each(function () {
-    str += $(this).text().toLowerCase() + " ";
+// Function to pull the correct info from the search bar
+$("#user-state").change(function () {
+  var state = "";
+  $("#user-state option:selected").each(function () {
+    state += $(this).text() + " ";
   });
-  stateInput = str;
+  stateInput = state;
+}).trigger("change");
+
+$("#user-sport").change(function () {
+  var sport = "";
+  $("#user-sport option:selected").each(function () {
+    sport += $(this).val() + " ";
+  });
+  eventInput = sport;
 }).trigger("change");
 
 // Hotel Function
@@ -45,7 +53,7 @@ function getTicketData() {
       "apikey": "xJY9ixix03PyEzTVRHSf0eldysSBFkoN",
       "stateCode": stateInput,
       "city": city,
-      "keyword": sports,
+      "keyword": "sports",
       "classificationName": eventInput,
       "startEndDateTime": startEndDateTime,
     },
