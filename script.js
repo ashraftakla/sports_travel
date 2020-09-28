@@ -147,5 +147,8 @@ $("#search-button").click(function () {
   console.log(city);
   $("#event-info").empty();
   getTicketData(city);
-})
+});
 
+$(function () {
+  $(".datepicker").datepicker();
+});
