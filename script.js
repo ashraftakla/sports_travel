@@ -101,7 +101,9 @@ function getTicketData() {
 
         // HTML setup
         var eventCard = $("<div class='card mt-4 has-text-centered' id='event-card'>");
-        var eventHeader = $("<div class='card-header' id='event-header'>").text(eventName);
+
+        var eventHeader = eventName;
+        // var eventHeader = $("<div class='card-header' id='event-header'>").text(eventName);
         var eventInfoDiv = $("<div class='card-content' id='event-info-div'>");
         var eventVenueP = $("<p id='event-address'>").text(eventVenue);
         var eventAddressP = $("<p id='event-address'>").text(eventAddress);
@@ -111,8 +113,11 @@ function getTicketData() {
 
         eventInfoDiv.append(eventAddressDiv, ticketInfoP);
         eventCard.append(eventHeader, eventInfoDiv);
-        $("#event-hotel-info").append(eventCard);
-        
+        // $("#event-hotel-info").append(eventCard);
+        $("#event-header").text(eventHeader);
+        $("#event-card").text(eventVenue)
+
+
       }
 
       getHotelData(eventLat, eventLon, eventDate);
