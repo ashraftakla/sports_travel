@@ -75,9 +75,15 @@ function getTicketData() {
       "apikey": "xJY9ixix03PyEzTVRHSf0eldysSBFkoN",
       "radius": "500",
       "keyword": "sports",
+<<<<<<< HEAD
       "city": 'san jose',
       "stateCode": 'ca',
       "classificationName": 'soccer',
+=======
+      "city": city,
+      "stateCode": stateInput,
+      "classificationName": eventInput,
+>>>>>>> master
       "localStartDateTime": "2020-09-30T00:00:00",
     },
     method: "GET"
