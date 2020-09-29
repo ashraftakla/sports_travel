@@ -1,18 +1,26 @@
 // Global Variables
-var city = $("#user-city").text() || "";
+var city = "";
 var stateInput = "";
-var eventInput = "baseball";
-var startDate = "";
-var endDate = "";
-var startEndDateTime = "2020-09-27" + "T00:00:00Z";
+var eventInput = "";
+var startDate = $("#start-date").val() || "";
+var endDate = $("#end-date").val() || "";
+// var startDateTime = 2020-09-30T00:00:00Z;
 
-// Function to pull the correct state info from the search bar
-$("select").change(function () {
-    var str = "";
-    $("select option:selected").each(function () {
-        str += $(this).text().toLowerCase() + " ";
+// Function to pull the correct info from the search bar
+$("#user-state").change(function () {
+    var state = "";
+    $("#user-state option:selected").each(function () {
+        state += $(this).text();
     });
-    stateInput = str;
+    stateInput = state;
+}).trigger("change");
+
+$("#user-sport").change(function () {
+    var sport = "";
+    $("#user-sport option:selected").each(function () {
+        sport += $(this).val();
+    });
+    eventInput = sport;
 }).trigger("change");
 
 // Hotel Function
@@ -38,15 +46,27 @@ function getHotelData(eventLat, eventLon, eventDate) {
 };
 
 function getTicketData() {
+    city = $("#user-city").val();
+    console.log(city);
+    console.log(stateInput);
+    console.log(eventInput);
+    // console.log(startDateTime);
+
+    if (eventInput === "Choose Sport") {
+        eventInput = "";
+    }
+    console.log(eventInput);
     // Ticketmaster Ajax call
     $.ajax({
         url: "https://app.ticketmaster.com/discovery/v2/events.json",
         data: {
             "apikey": "xJY9ixix03PyEzTVRHSf0eldysSBFkoN",
-            "stateCode": stateInput,
+            "radius": "500",
+            "keyword": "sports",
             "city": city,
+            "stateCode": stateInput,
             "classificationName": eventInput,
-            "startEndDateTime": startEndDateTime,
+            "localStartDateTime": "2020-09-30T00:00:00",
         },
         method: "GET"
     }).then(function (response) {
@@ -71,15 +91,16 @@ function getTicketData() {
 
                 // If time is not determined yet eventTime will show TBD
                 if (eventTime === undefined) {
-                    eventTime = "TBD";
+                    var finalTime = "TBD";
                 } else {
                     eventTime = eventTime.split(":");
                     var hours = eventTime[0];
                     var minutes = eventTime[1];
                     var AmOrPm = hours >= 12 ? 'pm' : 'am';
                     hours = (hours % 12) || 12;
-                    var finalTime = hours + ":" + minutes + AmOrPm;
+                    finalTime = hours + ":" + minutes + AmOrPm;
                 }
+
                 // If price range is undefined it will show prices unavailable
                 if (event.priceRanges != undefined) {
                     var priceRangeMin = event.priceRanges[0].min;
@@ -89,18 +110,11 @@ function getTicketData() {
                     priceRange = "Prices Unavailable";
                 }
 
-                // // Console Logs
-                // console.log("Event Name: " + event.name);
-                // console.log("Event DateTime: " + eventDateFinal + " " + finalTime);
-                // console.log("Event Venue: " + eventVenue);
-                // console.log("Event Address: " + eventAddress);
-                // console.log("Event Address Line2: " + eventAddress2);
-                // console.log("Event Price Range: " + priceRange);
-                // console.log("Event Lat/Lon: " + eventLat + "/" + eventLon);
-
                 // HTML setup
                 var eventCard = $("<div class='card mt-4 has-text-centered' id='event-card'>");
-                var eventHeader = $("<div class='card-header' id='event-header'>").text(eventName);
+
+                var eventHeader = eventName;
+                // var eventHeader = $("<div class='card-header' id='event-header'>").text(eventName);
                 var eventInfoDiv = $("<div class='card-content' id='event-info-div'>");
                 var eventVenueP = $("<p id='event-address'>").text(eventVenue);
                 var eventAddressP = $("<p id='event-address'>").text(eventAddress);
@@ -110,26 +124,28 @@ function getTicketData() {
 
                 eventInfoDiv.append(eventAddressDiv, ticketInfoP);
                 eventCard.append(eventHeader, eventInfoDiv);
-                $("#event-hotel-info").append(eventCard);
+                $("#event-info").append(eventCard);
 
             }
-
+            // Call get hotel data function
             getHotelData(eventLat, eventLon, eventDate);
-        } else {
-            $("#event-hotel-info").addClass("level-item has-text-centered").text("No Events Available, Please Search Again");
-        }
-    });
 
+        } else {
+            // If no events the page will display that there are no events available
+            $("#event-info").addClass("has-text-centered").text("No Events Available, Please Search Again");
+        }
+        // Click event for the tickets for the event
+        $("#event-card").click(function () {
+            window.open(eventURL);
+        });
+    });
 
 }
 
 // Search button function
 $("#search-button").click(function () {
-    $("#event-hotel-info").empty();
-    getTicketData();
+    console.log(city);
+    $("#event-info").empty();
+    getTicketData(city);
 })
 
-// Click event for the tickets for the event
-$("#event-card").click(function () {
-    window.open(eventURL);
-});
