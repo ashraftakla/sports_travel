@@ -3,6 +3,7 @@ var city = "";
 var stateInput = "";
 var eventInput = "";
 var startDate = $("#start-date").val() || "";
+console.log(startDate)
 var endDate = $("#end-date").val() || "";
 // var startDateTime = 2020-09-30T00:00:00Z;
 
