@@ -50,6 +50,14 @@ function getTicketData() {
   console.log(city);
   console.log(startDate);
   console.log(endDate);
+
+  startDate = startDate.split("/");
+  var year = startDate[0];
+  var month = startDate[1];
+  var day = startDate[2];
+  var finalStartDate = year + "/" + month + "/" + day;
+  console.log(finalStartDate);
+
   // console.log(startDateTime);
   if (eventInput === "Choose Sport") {
     eventInput = "football";
@@ -64,7 +72,7 @@ function getTicketData() {
       "city": city,
       "stateCode": stateInput,
       "classificationName": eventInput,
-      "localStartDateTime": "2020-09-30T00:00:00",
+      "localStartDateTime": finalStartDate + "T00:00:00",
     },
     method: "GET"
   }).then(function (response) {
