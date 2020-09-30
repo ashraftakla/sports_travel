@@ -1,14 +1,8 @@
-.footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
+body, html{
+  height: 100%;
   width: 100%;
-  height: 10%;
-  background-color: gold;
-  color: purple;
-  text-align: center;
-  font-size:x-large;
-  font-weight: bolder;
+  background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRNr76SbVflK9Dtnec0UWtB41-_eMUu1YBOeA&usqp=CAU);
+  background-size: auto;
 }
 .datepicker{
   color:black;
@@ -21,13 +15,6 @@
 select option:hover{
   text-shadow: 1px 2px 1px gold;
   display:block;
-}
-header{
-  background-color: purple;
-  text-align: center;
-  color: gold;
-  font-family: sans-serif, "Helvetica Neue", "Lucida Grande", Arial;
-  font-size: x-large;
 }
 span.stretch {
   display:block;
@@ -50,12 +37,7 @@ span.stretch {
   background: rgb(214, 159, 219);
   border-radius: auto;
 }
-body, html{
-  height: 100%;
-  width: 100%;
-  background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRNr76SbVflK9Dtnec0UWtB41-_eMUu1YBOeA&usqp=CAU);
-  background-size: auto;
-}
+
 .ui-datepicker table {
   width: 100%;
   color:black;
