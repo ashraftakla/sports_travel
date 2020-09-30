@@ -133,4 +133,8 @@ $("#search-button").click(function () {
 });
 $(function () {
   $(".datepicker").datepicker();
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> f35589013ddf9ff8d0c5b9076ec3d38a038b8ffc
