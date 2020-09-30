@@ -26,7 +26,7 @@ function getHotelData(eventLat, eventLon, year, month, day, eventInfoDiv, eventU
     "method": "GET",
     "headers": {
       "x-rapidapi-host": "tripadvisor1.p.rapidapi.com",
-      "x-rapidapi-key": "111d87e276msh7a7e68922114d72p183e89jsnda0c04325211"
+      "x-rapidapi-key": "094fd923e7msh5e28ed2c46e4f6ap10bdc3jsn237fc5b2027c",
     }
   }
   $.ajax(settings).done(function (response) {
