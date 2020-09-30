@@ -21,21 +21,18 @@ $("#user-sport").change(function () {
   });
   eventInput = sport;
 }).trigger("change");
-// Hotel Function
-function getHotelData(eventLat, eventLon, startDate, endDate) {
 
-  var startDate = startDate.split("/");
-  var year = startDate[0];
-  var month = startDate[1];
-  var day = startDate[2]
-  var checkIn = year + '/' + month + '/' + day;
+
+
+// Hotel Function
+function getHotelData(eventLat, eventLon, finalStartDate, endDate) {
 
   var settings = {
     "async": true,
     "crossDomain": true,
     "url": "https://tripadvisor1.p.rapidapi.com/hotels/list-by-latlng?lang=en_US&hotel_class=1%252C2%252C3&limit=5&adults=1&rooms=1&child_rm_ages=7%252C10&currency=USD&zff=4%252C6&subcategory=hotel%252Cbb%252Cspecialty&nights=2",
     "data": {
-      "checkin": startDate,
+      "checkin": finalStartDate,
       "latitude": eventLat,
       "longitude": eventLon,
     },
@@ -57,6 +54,8 @@ function getHotelData(eventLat, eventLon, startDate, endDate) {
     }
   });
 };
+
+
 function getTicketData() {
   city = $("#user-city").val();
   startDate = $("#start-date").val();
@@ -64,6 +63,14 @@ function getTicketData() {
   console.log(city);
   console.log(startDate);
   console.log(endDate);
+
+  startDate = startDate.split("/");
+  var year = startDate[0];
+  var month = startDate[1];
+  var day = startDate[2];
+  var finalStartDate = year + "/" + month + "/" + day;
+  console.log(finalStartDate);
+
   // console.log(startDateTime);
   if (eventInput === "Choose Sport") {
     eventInput = "football";
@@ -78,7 +85,7 @@ function getTicketData() {
       "city": city,
       "stateCode": stateInput,
       "classificationName": eventInput,
-      "localStartDateTime": "2020-09-30T00:00:00",
+      "localStartDateTime": finalStartDate + "T00:00:00",
     },
     method: "GET"
   }).then(function (response) {
@@ -132,7 +139,7 @@ function getTicketData() {
         eventCard.append(eventHeader, eventInfoDiv);
         $("#event-info").append(eventCard);
         // Call get hotel data function
-        getHotelData(eventLat, eventLon, startDate, endDate);
+        getHotelData(eventLat, eventLon, finalStartDate, endDate);
       }
     } else {
       // If no events the page will display that there are no events available
@@ -147,8 +154,4 @@ $("#search-button").click(function () {
 });
 $(function () {
   $(".datepicker").datepicker();
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> f35589013ddf9ff8d0c5b9076ec3d38a038b8ffc
