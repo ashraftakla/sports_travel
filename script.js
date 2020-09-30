@@ -52,7 +52,7 @@ function getHotelData(eventLat, eventLon, year, month, day, eventInfoDiv, eventU
     console.log(response);
     for (var h = 0; h < response.data.length; h++) {
       var hotel = response.data[h];
-      var hotelName = hotel.name
+      var hotelName = hotel.name;
       var hotelDistance = Math.floor(hotel.distance);
       var hotelPrice = hotel.price_level;
       var rating = hotel.rating;
