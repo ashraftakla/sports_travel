@@ -1,46 +1,58 @@
-.checkbox-label {
-
-    box-shadow: 1px 2px 1px black
-    ;
-    }
-  
-    .footer {
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      height: 10%;
-      background-color: gold;
-      color: purple;
-      text-align: center;
-     
-    }
-  .datepicker{
-    color:black;
-    font-weight: bold;
-  }
-  .state{
-    color:gold;
-    font-weight: bold;
-  }
-  select option:hover{
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 10%;
+  background-color: gold;
+  color: purple;
+  text-align: center;
+  font-size:x-large;
+  font-weight: bolder;
+}
+.datepicker{
+  color:black;
+  font-weight: bold;
+}
+.state{
+  color:gold;
+  font-weight: bold;
+}
+select option:hover{
   text-shadow: 1px 2px 1px gold;
   display:block;
-  }
-  
-  header{
-    background-color: purple;
-    text-align: center;
-    color: gold;
-    font-family: sans-serif, "Helvetica Neue", "Lucida Grande", Arial;
-    
-    font-size: x-large;
-  }
-  span.stretch {
-    display:block;
-    -webkit-transform:scale(2,1);
-  }
-
-  
-
-        
+}
+header{
+  background-color: purple;
+  text-align: center;
+  color: gold;
+  font-family: sans-serif, "Helvetica Neue", "Lucida Grande", Arial;
+  font-size: x-large;
+}
+span.stretch {
+  display:block;
+  -webkit-transform:scale(2,1);
+}
+.ui-widget-content{
+  width: 15%;
+  height: auto;
+  /* border:1px solid ; */
+  text-align: center;
+  /* color:purple; */
+  font-weight: bold;
+}
+.ui-datepicker{
+  font-size: x-large;
+  text-align: center;
+}
+.ui-widget-header {
+  background: gold;
+}
+.ui-widget-content .ui-state-default:hover{
+  background: rgb(214, 159, 219);
+  border-radius: auto;
+}
+body, html{
+  height: 100%;
+  width: 100%;
+}
