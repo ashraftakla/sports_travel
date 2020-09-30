@@ -21,6 +21,9 @@ $("#user-sport").change(function () {
   });
   eventInput = sport;
 }).trigger("change");
+
+
+
 // Hotel Function
 function getHotelData(eventLat, eventLon, startDate, endDate) {
   var settings = {
@@ -43,6 +46,8 @@ function getHotelData(eventLat, eventLon, startDate, endDate) {
     console.log(response);
   });
 };
+
+
 function getTicketData() {
   city = $("#user-city").val();
   startDate = $("#start-date").val();
