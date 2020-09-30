@@ -53,6 +53,8 @@ span.stretch {
 body, html{
   height: 100%;
   width: 100%;
+  background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRNr76SbVflK9Dtnec0UWtB41-_eMUu1YBOeA&usqp=CAU);
+  background-size: auto;
 }
 .ui-datepicker table {
   width: 100%;
@@ -84,4 +86,3 @@ body, html{
 .ui-datepicker-next{
   float:right; 
 }
-        
