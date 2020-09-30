@@ -37,7 +37,7 @@ function getHotelData(eventLat, eventLon, year, month, day, eventInfoDiv, eventU
       var hotelDistance = Math.floor(hotel.distance);
       var hotelPrice = hotel.price_level;
       var rating = hotel.rating;
-      
+
       //Hotel HTMl Setup
       var hotelNameP = $("<p class='card-header-title is-centered'>").text(hotelName);
       var hotelPriceP = $("<p class='hotel-price'>").text("Price Level: " + hotelPrice + " " + "Rating: " + rating + "/5.0");
@@ -84,9 +84,9 @@ function getTicketData() {
     method: "GET"
   }).then(function (response) {
 
-    // If no events available
+    // If no events available.  Due to COVID-19 no events will display, if we include ticket availability in our IF statement.
     if (response._embedded != undefined) {
-      
+
       // For loop to go through each event 
       for (var x = 0; x < response._embedded.events.length; x++) {
 
@@ -118,7 +118,7 @@ function getTicketData() {
           hours = (hours % 12) || 12;
           finalTime = hours + ":" + minutes + AmOrPm;
         }
-        
+
         // If price range is undefined it will show prices unavailable
         if (event.priceRanges != undefined) {
           var priceRangeMin = event.priceRanges[0].min;
