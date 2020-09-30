@@ -4,29 +4,10 @@ var stateInput = "";
 var eventInput = "";
 var endDate = "";
 var eventURL
-// Making sure there is something in the city input
-$("#use-city").keypress(function (event) {
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    $("#search-button").click();
-  }
-});
 
-// Function to pull the correct info from the search bar
-$("#user-state").change(function () {
-  var state = "";
-  $("#user-state option:selected").each(function () {
-    state += $(this).text();
-  });
-  stateInput = state;
-}).trigger("change");
-$("#user-sport").change(function () {
-  var sport = "";
-  $("#user-sport option:selected").each(function () {
-    sport += $(this).val();
-  });
-  eventInput = sport;
-}).trigger("change");
+$(function () {
+  $(".datepicker").datepicker();
+});
 
 
 // Hotel Function
@@ -49,38 +30,39 @@ function getHotelData(eventLat, eventLon, year, month, day, eventInfoDiv, eventU
     }
   }
   $.ajax(settings).done(function (response) {
-    console.log(response);
+    // For loop to go thru the list of hotels provided by the API
     for (var h = 0; h < response.data.length; h++) {
       var hotel = response.data[h];
-      var hotelName = hotel.name
+      var hotelName = hotel.name;
       var hotelDistance = Math.floor(hotel.distance);
       var hotelPrice = hotel.price_level;
       var rating = hotel.rating;
-
+      
       //Hotel HTMl Setup
       var hotelNameP = $("<p class='card-header-title is-centered'>").text(hotelName);
       var hotelPriceP = $("<p class='hotel-price'>").text("Price Level: " + hotelPrice + " " + "Rating: " + rating + "/5.0");
       var hotelDistP = $("<p class='hotel-distance'>").text("Distance from " + eventVenue + ": " + hotelDistance + " mile(s)");
 
+      // Appending hotel infor to the eventInfoDiv
       eventInfoDiv.append(hotelNameP, hotelPriceP, hotelDistP);
     }
   });
 };
 
-
+// Ticket function
 function getTicketData() {
+  // Variables to grab the value or make empty string 
   city = $("#user-city").val() || "";
   startDate = $("#start-date").val() || "";
 
-  console.log(startDate);
-  console.log(city);
+  // Adjustments to dat to get it in the correct order to API parameter
   startDate = startDate.split("/");
   var year = startDate[2];
   var month = startDate[0];
   var day = startDate[1];
   var finalStartDate = year + "-" + month + "-" + day;
-  console.log(startDate);
 
+  // If sport not picked eventInput will be empty string
   if (eventInput === "Choose Sport") {
     eventInput = "";
   }
@@ -88,9 +70,10 @@ function getTicketData() {
   // Ticketmaster Ajax call
   $.ajax({
     url: "https://app.ticketmaster.com/discovery/v2/events.json",
+    // API parameters
     data: {
       "apikey": "xJY9ixix03PyEzTVRHSf0eldysSBFkoN",
-      "size": "5",
+      "size": "8",
       "radius": "500",
       "keyword": "sports",
       "city": city,
@@ -100,11 +83,14 @@ function getTicketData() {
     },
     method: "GET"
   }).then(function (response) {
-    console.log(response);
 
+    // If no events available
     if (response._embedded != undefined) {
-      // Local Event Variables
+      
+      // For loop to go through each event 
       for (var x = 0; x < response._embedded.events.length; x++) {
+
+        // Response variables
         var event = response._embedded.events[x];
         var eventName = event.name;
         var eventStatus = event.dates.status.code;
@@ -116,12 +102,11 @@ function getTicketData() {
         eventURL = event.url;
         var eventLat = event._embedded.venues[0].location.latitude;
         var eventLon = event._embedded.venues[0].location.longitude;
-        console.log(eventVenue)
+
         // Setting date to show month/day/year
         eventDate = eventDate.split("-");
         var eventDateFinal = eventDate[1] + "/" + eventDate[2] + "/" + eventDate[0];
 
-        console.log(eventStatus);
         // If time is not determined yet eventTime will show TBD
         if (eventTime === undefined) {
           var finalTime = "TBD";
@@ -133,6 +118,7 @@ function getTicketData() {
           hours = (hours % 12) || 12;
           finalTime = hours + ":" + minutes + AmOrPm;
         }
+        
         // If price range is undefined it will show prices unavailable
         if (event.priceRanges != undefined) {
           var priceRangeMin = event.priceRanges[0].min;
@@ -141,16 +127,18 @@ function getTicketData() {
         } else {
           priceRange = "Prices Unavailable";
         }
-        // HTML setup
+
+        // HTML setup with bulma framework
         var eventCard = $("<div class='card mt-4 has-text-centered event-card'>");
         var eventHeader = $("<div class='card-header'>");
         var eventHeaderP = $("<div class='card-header-title is-centered event-header'>").text(eventName + " Status: " + eventStatus);
         var eventInfoDiv = $("<div class='card-content event-info-div'>");
-        var eventVenueP = $("<p class='event-venue'>").text(eventVenue);
+        var eventVenueP = $("<p class='event-venue card-header-title is-centered'>").text(eventVenue);
         var eventAddressP = $("<p class='event-address'>").text(eventAddress);
         var eventAddress2P = $("<p class='event-address-2'>").text(eventAddress2);
         var ticketInfoP = $("<p class='ticket-info'>").text(eventDateFinal + ' ' + finalTime + " --- " + "Price Range: " + priceRange);
         var urlLink = $(`<a target='_blank' href=${eventURL}>`).text("Click here for Ticket Info!");
+        // Appending correctly based off Bluma framework
         eventHeader.append(eventHeaderP);
         eventInfoDiv.append(eventVenueP, eventAddressP, eventAddress2P, ticketInfoP, urlLink);
         eventCard.append(eventHeader, eventInfoDiv);
@@ -164,14 +152,39 @@ function getTicketData() {
     }
   });
 }
-// Search button function
-$("#search-button").click(function () {
-  $("#event-info").empty();
-  getTicketData();
-});
-$("#ticket-button").click(function () {
-  window.open($eventURL);
-});
-$(function () {
-  $(".datepicker").datepicker();
-});
+
+// Wait until document is ready
+$(document).ready(function () {
+  // Making sure there is something in the city input
+  $("#use-city").keypress(function (event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      $("#search-button").click();
+    }
+  });
+
+  // Function to pull the correct info from the state and sport in the search bar
+  // State
+  $("#user-state").change(function () {
+    var state = "";
+    $("#user-state option:selected").each(function () {
+      state += $(this).text();
+    });
+    stateInput = state;
+  }).trigger("change");
+  // Sport
+  $("#user-sport").change(function () {
+    var sport = "";
+    $("#user-sport option:selected").each(function () {
+      sport += $(this).val();
+    });
+    eventInput = sport;
+  }).trigger("change");
+
+  // Search button function
+  $("#search-button").click(function () {
+    $("#event-info").empty();
+    getTicketData();
+  });
+
+})
