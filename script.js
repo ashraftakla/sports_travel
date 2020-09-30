@@ -25,20 +25,14 @@ $("#user-sport").change(function () {
 
 
 // Hotel Function
-function getHotelData(eventLat, eventLon, startDate, endDate) {
-
-  var startDate = startDate.split("/");
-  var year = startDate[0];
-  var month = startDate[1];
-  var day = startDate[2]
-  var checkIn = year + '/' + month + '/' + day;
+function getHotelData(eventLat, eventLon, finalStartDate, endDate) {
 
   var settings = {
     "async": true,
     "crossDomain": true,
     "url": "https://tripadvisor1.p.rapidapi.com/hotels/list-by-latlng?lang=en_US&hotel_class=1%252C2%252C3&limit=5&adults=1&rooms=1&child_rm_ages=7%252C10&currency=USD&zff=4%252C6&subcategory=hotel%252Cbb%252Cspecialty&nights=2",
     "data": {
-      "checkin": startDate,
+      "checkin": finalStartDate,
       "latitude": eventLat,
       "longitude": eventLon,
     },
@@ -145,7 +139,7 @@ function getTicketData() {
         eventCard.append(eventHeader, eventInfoDiv);
         $("#event-info").append(eventCard);
         // Call get hotel data function
-        getHotelData(eventLat, eventLon, startDate, endDate);
+        getHotelData(eventLat, eventLon, finalStartDate, endDate);
       }
     } else {
       // If no events the page will display that there are no events available
