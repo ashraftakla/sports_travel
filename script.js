@@ -60,9 +60,6 @@ function getTicketData() {
   city = $("#user-city").val();
   startDate = $("#start-date").val();
   endDate = $("#end-date").val();
-  console.log(city);
-  console.log(startDate);
-  console.log(endDate);
 
   startDate = startDate.split("/");
   var year = startDate[0];
@@ -71,7 +68,6 @@ function getTicketData() {
   var finalStartDate = year + "/" + month + "/" + day;
   console.log(finalStartDate);
 
-  // console.log(startDateTime);
   if (eventInput === "Choose Sport") {
     eventInput = "football";
   }
