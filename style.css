@@ -1,5 +1,6 @@
 .footer {
   position: fixed;
+  margin-top: 20%;
   bottom: 0;
   width: 100%;
   height: 10%;
@@ -8,6 +9,9 @@
   text-align: center;
   font-size:x-large;
   font-weight: bolder;
+}
+#event-info {
+  margin-bottom: 15%;
 }
 .datepicker{
   color:black;
@@ -54,7 +58,6 @@ body, html{
   width: 100%;
   background-image: url(https://i.pinimg.com/originals/b4/78/4e/b4784e9d98b969ad44662925d3e1404b.jpg);
   background-size: auto;
-  opacity: .9;
 }
 .ui-datepicker table {
   width: 100%;
