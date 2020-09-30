@@ -36,9 +36,7 @@ span.stretch {
 .ui-widget-content{
   width: 15%;
   height: auto;
-  /* border:1px solid ; */
   text-align: center;
-  /* color:purple; */
   font-weight: bold;
 }
 .ui-datepicker{
@@ -56,3 +54,34 @@ body, html{
   height: 100%;
   width: 100%;
 }
+.ui-datepicker table {
+  width: 100%;
+  color:black;
+}
+.ui-datepicker th {
+  background-color:#808080;
+  text-transform: uppercase;
+  font-size: 8pt;
+  color: white;
+}
+.ui-datepicker td span, .ui-datepicker td a {
+  display: inline-block;
+  text-align: center;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  color: #ffffff;
+}
+.ui-datepicker-calendar .ui-state-default {
+  background: linear-gradient(#999999, #737373);
+  color:#ffffff;
+  height:30px;
+  width:30px;
+}
+.ui-datepicker-prev{
+  float:left; 
+}
+.ui-datepicker-next{
+  float:right; 
+}
+        
